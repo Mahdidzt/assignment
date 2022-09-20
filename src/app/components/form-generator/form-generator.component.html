@@ -1,0 +1,30 @@
+<div class="block w-1/2 mx-auto">
+  <form (ngSubmit)="onSubmit()" [formGroup]="formGroup" class="grid p-8 bg-white rounded-sm shadow-sm gap-y-6">
+    <ng-container *ngFor="let form of formArray">
+      <ng-container [ngSwitch]="form.type">
+        <div *ngSwitchCase="'text'">
+          <mat-form-field [ngClass]="{'!hidden': form.hidden === 'true'}" class="w-3/4" appearance="fill">
+            <mat-label>{{form.label}}</mat-label>
+            <input [hidden]="form.hidden === 'true'" id="{{form.field}}" formControlName="{{form.field}}" matInput>
+          </mat-form-field>
+          <mat-error *ngIf="f[form.field].touched && f[form.field].hasError('required')">
+            {{form.label}} is required
+          </mat-error>
+        </div>
+
+        <div *ngSwitchCase="'check'">
+          <mat-checkbox id="{{form.field}}" formControlName="{{form.field}}">{{form.label}}</mat-checkbox>
+          <mat-error class="mt-2" *ngIf="f[form.field].touched && f[form.field].hasError('required')">
+            {{form.label}} is required
+          </mat-error>
+        </div>
+
+      </ng-container>
+    </ng-container>
+
+    <button type="submit"
+      class="justify-self-start text-white bg-blue-500 hover:bg-blue-700 transition-colors focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+      Submit
+    </button>
+  </form>
+</div>
